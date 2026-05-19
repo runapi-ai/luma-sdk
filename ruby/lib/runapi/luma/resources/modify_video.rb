@@ -1,0 +1,41 @@
+# frozen_string_literal: true
+
+module RunApi
+  module Luma
+    module Resources
+      class ModifyVideo
+        include RunApi::Core::ResourceHelpers
+
+        ENDPOINT = "/api/v1/luma/modify_video"
+        RESPONSE_CLASS = Types::ModifyVideoResponse
+        COMPLETED_RESPONSE_CLASS = Types::CompletedModifyVideoResponse
+
+        def initialize(http)
+          @http = http
+        end
+
+        def run(**params)
+          task = create(**params)
+          poll_until_complete { get(task.id) }
+        end
+
+        def create(**params)
+          params = compact_params(params)
+          validate_params!(params)
+          request(:post, ENDPOINT, body: params)
+        end
+
+        def get(id)
+          request(:get, "#{ENDPOINT}/#{id}")
+        end
+
+        private
+
+        def validate_params!(params)
+          raise Core::ValidationError, "prompt is required" unless param(params, :prompt)
+          raise Core::ValidationError, "video_url is required" unless param(params, :video_url)
+        end
+      end
+    end
+  end
+end
