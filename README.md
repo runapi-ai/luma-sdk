@@ -1,4 +1,24 @@
-# Luma AI API SDK for RunAPI
+<p align="center">
+  <a href="https://runapi.ai"><img src="https://runapi.ai/icon.svg" height="56" alt="RunAPI"></a>
+</p>
+
+<h3 align="center">
+  <a href="https://github.com/runapi-ai/luma-sdk">Luma API SDK for RunAPI</a>
+</h3>
+
+<p align="center">
+  Luma API SDKs for JavaScript, Ruby, and Go on RunAPI.
+</p>
+
+<div align="center">
+
+[![npm](https://img.shields.io/npm/v/@runapi.ai/luma)](https://www.npmjs.com/package/@runapi.ai/luma)
+[![RubyGems](https://img.shields.io/gem/v/runapi-luma)](https://rubygems.org/gems/runapi-luma)
+[![Go Reference](https://pkg.go.dev/badge/github.com/runapi-ai/luma-sdk/go.svg)](https://pkg.go.dev/github.com/runapi-ai/luma-sdk/go)
+[![License](https://img.shields.io/github/license/runapi-ai/luma-sdk)](https://github.com/runapi-ai/luma-sdk/blob/main/LICENSE)
+
+</div>
+<br/>
 
 The luma ai api SDK packages JavaScript, Ruby, and Go clients for Luma on RunAPI. Use this luma ai api SDK for video modification and transformation workflows that need typed installs, JSON request bodies, task polling, and consistent RunAPI errors across services.
 
@@ -56,9 +76,9 @@ For short scripts, use `run` with the same JSON body to create the task and wait
 ## Pricing and variants
 
 Use the most specific luma ai api variant page for pricing, rate limits, and commercial usage:
-- [Modify video](https://runapi.ai/models/luma/modify-video)
+- [Modify video](https://runapi.ai/models/luma)
 
-Default pricing link for the luma ai api SDK: https://runapi.ai/models/luma/modify-video
+Default pricing link for the luma ai api SDK: https://runapi.ai/models/luma
 
 ## FAQ
 
@@ -68,7 +88,7 @@ Install the model package for your language: `@runapi.ai/luma`, `runapi-luma`, o
 
 ### Where should public links point?
 
-Primary luma ai api links point to https://runapi.ai/models/luma. Pricing and usage-policy links point to variant pages such as https://runapi.ai/models/luma/modify-video. Provider comparisons point to https://runapi.ai/providers/luma, and broad browsing points to https://runapi.ai/models.
+Primary luma ai api links point to https://runapi.ai/models/luma. Pricing and usage-policy links point to variant pages such as https://runapi.ai/models/luma. Provider comparisons point to https://runapi.ai/providers/luma, and broad browsing points to https://runapi.ai/models.
 
 ## License
 
