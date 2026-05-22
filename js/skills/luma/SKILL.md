@@ -1,72 +1,72 @@
 ---
 name: luma
-description: Modify videos through RunAPI.ai using the @runapi.ai/luma Node/TypeScript SDK. Use when the user asks to transform or restyle an existing video with Luma, add video modification, or writes against @runapi.ai/luma. Triggers on "luma", "video modification", "modify video", "video transform", "@runapi.ai/luma".
-documentation: https://runapi.ai/models/luma
-provider_page: https://runapi.ai/providers/luma
-catalog: https://runapi.ai/models
+description: Generate and edit video with Luma through RunAPI. Use when the user asks an agent to create, edit, or transform video with Luma. Default to the RunAPI CLI for one-off generation; use SDKs only when the user is integrating RunAPI into an app or backend.
+documentation: https://runapi.ai/models/luma.md
+provider_page: https://runapi.ai/providers/luma.md
+catalog: https://runapi.ai/models.md
+metadata:
+  openclaw:
+    homepage: https://runapi.ai/models/luma
+    requires:
+      bins:
+      - runapi
+    install:
+    - kind: brew
+      formula: runapi-ai/tap/runapi
+      bins:
+      - runapi
+    envVars:
+    - name: RUNAPI_API_KEY
+      required: false
+      description: Optional RunAPI API key; agents should prefer environment auth or saved CLI config. Browser login is interactive fallback only.
 ---
-# @runapi.ai/luma - RunAPI.ai Luma video modification
 
-Build Node / TypeScript integrations that transform an existing video with a prompt through RunAPI.ai.
+# Luma on RunAPI
 
-## Setup
+Generate and edit video with Luma through RunAPI. The default path for one-off agent tasks is the `runapi` CLI; SDKs are for application integration.
 
-Requires **Node 18+** (global `fetch`).
+## Routing decision
 
-```bash
-npm install @runapi.ai/luma
+- One-off generation, editing, or transformation for the user → use the **CLI path** with the `runapi` binary.
+- Building an app, backend, worker, library, or production codebase → use the **SDK integration path**.
+
+## CLI path
+
+The `runapi` binary is the runtime dependency. Run `runapi auth status` first. For agents and headless runs, prefer `RUNAPI_API_KEY` or import it into saved config with `printf '%s' "$RUNAPI_API_KEY" | runapi auth import-token --token -`. Use `runapi login` only when the user explicitly wants interactive browser auth.
+
+Inspect the available actions and request fields with CLI help:
+
+```shell
+runapi luma --help
+runapi luma modify-video --help
 ```
 
-```dotenv
-# .env
-RUNAPI_API_KEY=runapi_xxx   # get one at https://runapi.ai/settings/api_keys
+Run a one-off task (synchronous — polls until the task completes):
+
+```shell
+runapi luma modify-video --input-file request.json
 ```
 
-```ts
-import { LumaClient } from '@runapi.ai/luma';
+Submit asynchronously and poll separately:
 
-const client = new LumaClient();
+```shell
+runapi luma modify-video --async --input-file request.json
+runapi wait <task-id> --service luma --action modify-video
 ```
 
-Pass `{ apiKey }` explicitly if you manage secrets differently. `baseUrl` defaults to `https://runapi.ai`; override only for local development.
+Available actions: `modify-video`.
 
-## Resource
+## SDK integration path
 
-`client.videoModifications` uses the async task contract:
+When integrating Luma into an app, backend, worker, or library — not for one-off tasks — use a RunAPI SDK package:
 
-```ts
-const { id } = await client.videoModifications.create({ ... });
-const status = await client.videoModifications.get(id);
-const result = await client.videoModifications.run({ ... });
-```
+- JavaScript / TypeScript: `@runapi.ai/luma`
+- Ruby: `runapi-luma`
+- Go: `github.com/runapi-ai/luma-sdk/go`
 
-## Modify video
+## References
 
-```ts
-const result = await client.videoModifications.run({
-  prompt: 'Turn the street into a rainy cyberpunk night with neon reflections',
-  video_url: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
-});
+- Model overview, pricing, and rate limits: https://runapi.ai/models/luma.md
+- Provider comparison: https://runapi.ai/providers/luma.md
+- Full model catalog: https://runapi.ai/models.md
 
-const url = result.videos[0].url;
-```
-
-## Key params
-
-- `prompt`: Required description of the target transformation.
-- `video_url`: Required public video URL.
-- `watermark`: Optional watermark text.
-- `callback_url`: Optional webhook URL for async completion.
-
-## Errors
-
-All errors are re-exported from `@runapi.ai/core`. Use `instanceof` checks instead of string-matching messages. For long-running tasks, prefer `create()` plus webhook or `get(id)` in request handlers, and reserve `run()` for jobs / CLI.
-
-## RunAPI public routing
-
-luma ai api public links use the API-379 catalog route map. The main luma ai api page is https://runapi.ai/models/luma. SDK docs live at https://runapi.ai/docs#sdk-luma and product docs live at https://runapi.ai/docs#luma.
-
-Pricing, rate limits, and commercial usage for luma ai api should point to the most specific variant page:
-- [Modify video](https://runapi.ai/models/luma)
-
-Compare Luma with other Luma models at https://runapi.ai/providers/luma. Browse every RunAPI model and skill at https://runapi.ai/models. SDK repository: https://github.com/runapi-ai/luma-sdk. Skill repository: https://github.com/runapi-ai/luma.
