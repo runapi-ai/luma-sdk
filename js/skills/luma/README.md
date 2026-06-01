@@ -52,7 +52,7 @@ import { LumaClient } from '@runapi.ai/luma';
 const client = new LumaClient();
 const result = await client.videoModifications.run({
   prompt: 'Turn the street into a rainy cyberpunk night',
-  video_url: 'https://cdn.example.com/input.mp4',
+  source_video_url: 'https://cdn.runapi.ai/public/samples/video.mp4',
 });
 const url = result.videos[0].url;
 ```

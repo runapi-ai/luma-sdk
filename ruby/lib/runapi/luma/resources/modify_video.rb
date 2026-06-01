@@ -33,7 +33,7 @@ module RunApi
 
         def validate_params!(params)
           raise Core::ValidationError, "prompt is required" unless param(params, :prompt)
-          raise Core::ValidationError, "video_url is required" unless param(params, :video_url)
+          raise Core::ValidationError, "source_video_url is required" unless param(params, :source_video_url)
         end
       end
     end

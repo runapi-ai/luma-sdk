@@ -28,9 +28,9 @@ func TestModifyVideoCreate(t *testing.T) {
 	stub := &stubHTTPClient{response: json.RawMessage(`{"id":"task_luma_123","status":"processing"}`)}
 	client := NewClientWithHTTP(stub)
 	resp, err := client.ModifyVideo.Create(context.Background(), ModifyVideoParams{
-		Prompt:      "Turn the street into a rainy cyberpunk night with neon reflections",
-		VideoURL:    "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
-		CallbackURL: "https://your-domain.com/api/callbacks/luma",
+		Prompt:         "Turn the street into a rainy cyberpunk night with neon reflections",
+		SourceVideoURL: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+		CallbackURL:    "https://your-domain.com/api/callbacks/luma",
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -39,8 +39,11 @@ func TestModifyVideoCreate(t *testing.T) {
 		t.Fatalf("unexpected request: %s %s", stub.method, stub.path)
 	}
 	body := stub.body.(map[string]any)
-	if body["video_url"] != "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4" {
-		t.Fatalf("unexpected video_url: %v", body["video_url"])
+	if body["source_video_url"] != "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4" {
+		t.Fatalf("unexpected source_video_url: %v", body["source_video_url"])
+	}
+	if _, ok := body["video_url"]; ok {
+		t.Fatalf("expected request body to omit provider video_url key: %v", body)
 	}
 	if resp.ID != "task_luma_123" {
 		t.Fatalf("unexpected ID: %v", resp.ID)

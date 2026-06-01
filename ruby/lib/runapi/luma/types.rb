@@ -13,13 +13,13 @@ module RunApi
       end
 
       class ModifyVideoResponse < AsyncTaskResponse
-        optional :videos, [ -> { Video } ]
-        optional :sources, [ -> { Video } ]
+        optional :videos, [-> { Video }]
+        optional :sources, [-> { Video }]
         optional :error, String
       end
 
       class CompletedModifyVideoResponse < ModifyVideoResponse
-        required :videos, [ -> { Video } ]
+        required :videos, [-> { Video }]
       end
     end
   end

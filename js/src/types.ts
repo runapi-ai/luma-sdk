@@ -2,7 +2,7 @@ import type { AsyncTaskStatus } from '@runapi.ai/core';
 
 export interface ModifyVideoParams {
   prompt: string;
-  video_url: string;
+  source_video_url: string;
   callback_url?: string;
   watermark?: string;
 }

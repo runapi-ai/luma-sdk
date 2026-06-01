@@ -1,6 +1,6 @@
 # Luma AI API Go SDK for RunAPI
 
-The luma ai api Go SDK is the language-specific package for Luma on RunAPI. Use this luma ai api package for text-to-video, image-to-video, video-to-video, animation, and edit flows when your application needs JSON request bodies, task status lookup, and consistent RunAPI errors in Go.
+The luma ai api Go SDK is the language-specific package for Luma on RunAPI. Use this luma ai api package for text-to-video, image-to-video, video editing, and animation flows when your application needs JSON request bodies, task status lookup, and consistent RunAPI errors in Go.
 
 This luma ai api README is the Go package guide inside the public `luma-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/luma; for API reference, use https://runapi.ai/docs#luma; for SDK docs, use https://runapi.ai/docs#sdk-luma.
 

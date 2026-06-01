@@ -3,10 +3,10 @@ package luma
 type TaskStatus string
 
 type ModifyVideoParams struct {
-	Prompt      string `json:"prompt" help:"required; English prompt describing the video changes"`
-	VideoURL    string `json:"video_url" help:"required; publicly accessible source video URL"`
-	CallbackURL string `json:"callback_url,omitempty" help:"optional; HTTPS callback URL for completion events"`
-	Watermark   string `json:"watermark,omitempty" help:"optional; watermark identifier"`
+	Prompt         string `json:"prompt" help:"required; English prompt describing the video changes"`
+	SourceVideoURL string `json:"source_video_url" help:"required; publicly accessible source video URL"`
+	CallbackURL    string `json:"callback_url,omitempty" help:"optional; HTTPS callback URL for completion events"`
+	Watermark      string `json:"watermark,omitempty" help:"optional; watermark identifier"`
 }
 
 type AsyncTaskResponse struct {
