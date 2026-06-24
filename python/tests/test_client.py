@@ -71,7 +71,7 @@ def test_create_posts_compacted_body():
     fake = FakeHttp({"id": "t1", "status": "pending"})
     client = LumaClient(api_key="k", http_client=fake)
     result = client.modify_video.create(
-        model="ray-2-modify-video",
+        model="luma-modify-video",
         prompt="hello",
         source_video_url="https://example.com/source.mp4",
         callback_url=None,
@@ -81,7 +81,7 @@ def test_create_posts_compacted_body():
             "post",
             "/api/v1/luma/modify_video",
             {
-                "model": "ray-2-modify-video",
+                "model": "luma-modify-video",
                 "prompt": "hello",
                 "source_video_url": "https://example.com/source.mp4",
             },
@@ -109,6 +109,7 @@ def test_run_polls_and_narrows_completed_type():
     )
     client = LumaClient(api_key="k", http_client=fake)
     result = client.modify_video.run(
+        model="luma-modify-video",
         prompt="hi",
         source_video_url="https://example.com/source.mp4",
     )
@@ -121,13 +122,19 @@ def test_run_polls_and_narrows_completed_type():
 # --- validation -----------------------------------------------------------
 
 
+def test_create_requires_model():
+    client = LumaClient(api_key="k", http_client=FakeHttp())
+    with pytest.raises(ValidationError, match="model must be one of: luma-modify-video"):
+        client.modify_video.create(prompt="hi", source_video_url="https://example.com/source.mp4")
+
+
 def test_create_requires_prompt():
     client = LumaClient(api_key="k", http_client=FakeHttp())
     with pytest.raises(ValidationError, match="prompt is required"):
-        client.modify_video.create(source_video_url="https://example.com/source.mp4")
+        client.modify_video.create(model="luma-modify-video", source_video_url="https://example.com/source.mp4")
 
 
 def test_create_requires_source_video_url():
     client = LumaClient(api_key="k", http_client=FakeHttp())
     with pytest.raises(ValidationError, match="source_video_url is required"):
-        client.modify_video.create(prompt="hi")
+        client.modify_video.create(model="luma-modify-video", prompt="hi")

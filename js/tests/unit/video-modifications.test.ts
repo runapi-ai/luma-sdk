@@ -16,6 +16,7 @@ describe('Luma modify videos', () => {
     const resource = new ModifyVideo(mockHttp);
 
     await resource.create({
+      model: 'luma-modify-video',
       prompt: 'Turn the street into a rainy cyberpunk night with neon reflections',
       source_video_url: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
       callback_url: 'https://your-domain.com/api/callbacks/luma',
@@ -24,6 +25,7 @@ describe('Luma modify videos', () => {
 
     expect(mockHttp.request).toHaveBeenCalledWith('POST', '/api/v1/luma/modify_video', {
       body: {
+        model: 'luma-modify-video',
         prompt: 'Turn the street into a rainy cyberpunk night with neon reflections',
         source_video_url: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
         callback_url: 'https://your-domain.com/api/callbacks/luma',

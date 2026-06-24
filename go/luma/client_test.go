@@ -28,6 +28,7 @@ func TestModifyVideoCreate(t *testing.T) {
 	stub := &stubHTTPClient{response: json.RawMessage(`{"id":"task_luma_123","status":"processing"}`)}
 	client := NewClientWithHTTP(stub)
 	resp, err := client.ModifyVideo.Create(context.Background(), ModifyVideoParams{
+		Model:          "luma-modify-video",
 		Prompt:         "Turn the street into a rainy cyberpunk night with neon reflections",
 		SourceVideoURL: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
 		CallbackURL:    "https://your-domain.com/api/callbacks/luma",

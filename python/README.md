@@ -18,7 +18,7 @@ from runapi.luma import LumaClient
 client = LumaClient()  # reads RUNAPI_API_KEY, or pass api_key="sk-..."
 
 task = client.modify_video.create(
-    model="ray-2-modify-video",
+    model="luma-modify-video",
     prompt="Make it cinematic with warm golden tones",
     source_video_url="https://example.com/source.mp4",
 )
@@ -29,7 +29,7 @@ Use `create` when you want to submit a task and return quickly, `get` when you n
 
 ```python
 result = client.modify_video.run(
-    model="ray-2-modify-video",
+    model="luma-modify-video",
     prompt="Restyle as a hand-painted animation",
     source_video_url="https://example.com/source.mp4",
 )

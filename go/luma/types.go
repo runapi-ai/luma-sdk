@@ -7,6 +7,7 @@ type TaskStatus string
 // ModifyVideoParams configures prompt-guided video modification.
 // Prompt must be in English. SourceVideoURL must be publicly accessible.
 type ModifyVideoParams struct {
+	Model          string `json:"model" help:"required; model slug"`
 	Prompt         string `json:"prompt" help:"required; English prompt describing the video changes"`
 	SourceVideoURL string `json:"source_video_url" help:"required; publicly accessible source video URL"`
 	CallbackURL    string `json:"callback_url,omitempty" help:"optional; HTTPS callback URL for completion events"`

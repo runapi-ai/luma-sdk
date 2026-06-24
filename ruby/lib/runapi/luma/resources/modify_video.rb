@@ -31,7 +31,7 @@ module RunApi
         # @return [RunApi::Luma::Types::ModifyVideoResponse] task creation result with id
         def create(**params)
           params = compact_params(params)
-          validate_params!(params)
+          validate_contract!(CONTRACT["modify-video"], params)
           request(:post, ENDPOINT, body: params)
         end
 
@@ -41,13 +41,6 @@ module RunApi
         # @return [RunApi::Luma::Types::ModifyVideoResponse] current task status
         def get(id)
           request(:get, "#{ENDPOINT}/#{id}")
-        end
-
-        private
-
-        def validate_params!(params)
-          raise Core::ValidationError, "prompt is required" unless param(params, :prompt)
-          raise Core::ValidationError, "source_video_url is required" unless param(params, :source_video_url)
         end
       end
     end

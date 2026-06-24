@@ -5,6 +5,7 @@
 //
 //	client, err := luma.NewClient(option.WithAPIKey("sk-your-api-key"))
 //	result, err := client.ModifyVideo.Run(ctx, luma.ModifyVideoParams{
+//	    Model:          "luma-modify-video",
 //	    Prompt:         "Add falling snow and a blue color grade",
 //	    SourceVideoURL: "https://example.com/input.mp4",
 //	})
@@ -56,7 +57,11 @@ type ModifyVideo struct{ http core.HTTPClient }
 // Create submits a modify-video task and returns immediately with a task id.
 func (r *ModifyVideo) Create(ctx context.Context, params ModifyVideoParams, opts ...option.RequestOption) (*core.TaskCreateResponse, error) {
 	requestOptions, _ := option.ResolveRequestOptions(opts...)
-	return core.PostJSON[core.TaskCreateResponse](ctx, r.http, modifyVideoPath, core.CompactParams(params), requestOptions)
+	body := core.CompactParams(params)
+	if err := core.ValidateParams(contractSchema["modify-video"], body); err != nil {
+		return nil, err
+	}
+	return core.PostJSON[core.TaskCreateResponse](ctx, r.http, modifyVideoPath, body, requestOptions)
 }
 
 // Get fetches the current status of a modify-video task by id.

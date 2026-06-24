@@ -5,6 +5,8 @@ import type { AsyncTaskStatus } from '@runapi.ai/core';
  * Source motion is preserved while the described visual changes are applied.
  */
 export interface ModifyVideoParams {
+  /** Model slug. */
+  model: string;
   /** English-language description of the desired visual change (e.g. "Add a dramatic sunset lighting effect"). */
   prompt: string;
   /** Publicly accessible URL of the source video to modify. */
