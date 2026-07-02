@@ -17,7 +17,7 @@ class LumaClient:
         client = LumaClient(api_key="sk-...")
         result = client.modify_video.run(
             model="...", prompt="Make it cinematic",
-            source_video_url="https://example.com/source.mp4",
+            source_video_url="https://cdn.runapi.ai/public/samples/video.mp4",
         )
     """
 

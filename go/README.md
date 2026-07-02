@@ -1,8 +1,8 @@
-# Luma AI API Go SDK for RunAPI
+# Luma API Go SDK for RunAPI
 
-The luma ai api Go SDK is the language-specific package for Luma on RunAPI. Use this luma ai api package for text-to-video, image-to-video, video editing, and animation flows when your application needs JSON request bodies, task status lookup, and consistent RunAPI errors in Go.
+The Luma Go SDK is the language-specific package for Luma on RunAPI. Use this package for video generation, animation, and video editing workflows when your application needs request bodies, task status lookup, and consistent RunAPI errors in Go.
 
-This luma ai api README is the Go package guide inside the public `luma-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/luma; for API reference, use https://runapi.ai/docs#luma; for SDK docs, use https://runapi.ai/docs#sdk-luma.
+This README is the Go package guide inside the public `luma-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/luma; for API reference, use https://runapi.ai/docs#luma; for SDK docs, use https://runapi.ai/docs#sdk-luma.
 
 ## Install
 
@@ -20,10 +20,10 @@ import (
 )
 
 client, err := luma.NewClient()
-task, err := client.VideoModifications.Create(context.Background(), luma.VideoModificationParams{
+task, err := client.ModifyVideo.Create(context.Background(), luma.ModifyVideoParams{
   // Pass the Luma JSON request body from https://runapi.ai/docs#luma.
 })
-status, err := client.VideoModifications.Get(context.Background(), task.ID)
+status, err := client.ModifyVideo.Get(context.Background(), task.ID)
 ```
 
 Use `create` when you want to submit a task and return quickly, `get` when you need the latest task state, and `run` when a script should create and poll until completion. In web request handlers, prefer `create` plus webhook or later `get` polling so a worker is not held open.
@@ -32,7 +32,7 @@ RunAPI-generated file URLs are temporary. Download and store generated images, v
 
 ## Language notes
 
-Use the public Go module with `github.com/runapi-ai/core-sdk/go` options when building video services, CLIs, or workers. The available resources include video modifications. Keep `RUNAPI_API_KEY` in the environment or your secret manager; never commit API keys or callback secrets.
+Use the public Go module with `github.com/runapi-ai/core-sdk/go` options when building video services, CLIs, or workers. The available resources are `ModifyVideo`. Keep `RUNAPI_API_KEY` in the environment or your secret manager; never commit API keys or callback secrets.
 
 ## Links
 

@@ -12,7 +12,7 @@ import { ModifyVideo } from './resources/modify-video';
  *
  * const result = await client.modifyVideo.run({
  *   prompt: 'Add a dramatic sunset lighting effect',
- *   source_video_url: 'https://example.com/input.mp4',
+ *   source_video_url: 'https://cdn.runapi.ai/public/samples/video.mp4',
  * });
  * ```
  */

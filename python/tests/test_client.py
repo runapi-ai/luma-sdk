@@ -73,7 +73,7 @@ def test_create_posts_compacted_body():
     result = client.modify_video.create(
         model="luma-modify-video",
         prompt="hello",
-        source_video_url="https://example.com/source.mp4",
+        source_video_url="https://cdn.runapi.ai/public/samples/video.mp4",
         callback_url=None,
     )
     assert fake.calls == [
@@ -83,7 +83,7 @@ def test_create_posts_compacted_body():
             {
                 "model": "luma-modify-video",
                 "prompt": "hello",
-                "source_video_url": "https://example.com/source.mp4",
+                "source_video_url": "https://cdn.runapi.ai/public/samples/video.mp4",
             },
         ),
     ]
@@ -111,7 +111,7 @@ def test_run_polls_and_narrows_completed_type():
     result = client.modify_video.run(
         model="luma-modify-video",
         prompt="hi",
-        source_video_url="https://example.com/source.mp4",
+        source_video_url="https://cdn.runapi.ai/public/samples/video.mp4",
     )
 
     assert isinstance(result, CompletedModifyVideoResponse)
@@ -125,13 +125,13 @@ def test_run_polls_and_narrows_completed_type():
 def test_create_requires_model():
     client = LumaClient(api_key="k", http_client=FakeHttp())
     with pytest.raises(ValidationError, match="model must be one of: luma-modify-video"):
-        client.modify_video.create(prompt="hi", source_video_url="https://example.com/source.mp4")
+        client.modify_video.create(prompt="hi", source_video_url="https://cdn.runapi.ai/public/samples/source.mp4")
 
 
 def test_create_requires_prompt():
     client = LumaClient(api_key="k", http_client=FakeHttp())
     with pytest.raises(ValidationError, match="prompt is required"):
-        client.modify_video.create(model="luma-modify-video", source_video_url="https://example.com/source.mp4")
+        client.modify_video.create(model="luma-modify-video", source_video_url="https://cdn.runapi.ai/public/samples/source.mp4")
 
 
 def test_create_requires_source_video_url():

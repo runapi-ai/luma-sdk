@@ -10,7 +10,7 @@ module RunApi
     #   client = RunApi::Luma::Client.new(api_key: "your-api-key")
     #   result = client.modify_video.run(
     #     prompt: "Add a dramatic sunset lighting effect",
-    #     source_video_url: "https://example.com/input.mp4"
+    #     source_video_url: "https://cdn.runapi.ai/public/samples/video.mp4"
     #   )
     class Client < RunApi::Core::Client
       # @return [Resources::ModifyVideo] Prompt-guided video editing that preserves source motion.

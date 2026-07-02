@@ -7,7 +7,7 @@
 //	result, err := client.ModifyVideo.Run(ctx, luma.ModifyVideoParams{
 //	    Model:          "luma-modify-video",
 //	    Prompt:         "Add falling snow and a blue color grade",
-//	    SourceVideoURL: "https://example.com/input.mp4",
+//	    SourceVideoURL: "https://cdn.runapi.ai/public/samples/video.mp4",
 //	})
 package luma
 

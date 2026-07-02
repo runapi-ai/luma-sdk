@@ -1,8 +1,8 @@
-# Luma Python SDK for RunAPI
+# Luma API Python SDK for RunAPI
 
-The Luma Python SDK is the language-specific package for Luma on RunAPI. Use this luma package for video modification flows when your application needs JSON request bodies, task status lookup, and consistent RunAPI errors in Python.
+The Luma Python SDK is the language-specific package for Luma on RunAPI. Use this package for video generation, animation, and video editing workflows when your application needs request bodies, task status lookup, and consistent RunAPI errors in Python.
 
-This luma README is the Python package guide inside the public `luma-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/luma; for API reference, use https://runapi.ai/docs#luma; for SDK docs, use https://runapi.ai/docs#sdk-luma.
+This README is the Python package guide inside the public `luma-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/luma; for API reference, use https://runapi.ai/docs#luma; for SDK docs, use https://runapi.ai/docs#sdk-luma.
 
 ## Install
 
@@ -20,7 +20,7 @@ client = LumaClient()  # reads RUNAPI_API_KEY, or pass api_key="sk-..."
 task = client.modify_video.create(
     model="luma-modify-video",
     prompt="Make it cinematic with warm golden tones",
-    source_video_url="https://example.com/source.mp4",
+    source_video_url="https://cdn.runapi.ai/public/samples/video.mp4",
 )
 status = client.modify_video.get(task.id)
 ```
@@ -31,7 +31,7 @@ Use `create` when you want to submit a task and return quickly, `get` when you n
 result = client.modify_video.run(
     model="luma-modify-video",
     prompt="Restyle as a hand-painted animation",
-    source_video_url="https://example.com/source.mp4",
+    source_video_url="https://cdn.runapi.ai/public/samples/video.mp4",
 )
 print(result.videos[0].url)
 ```
