@@ -13,7 +13,7 @@ gem install runapi-luma
 ## Quick start
 
 ```ruby
-require "runapi-luma"
+require "runapi/luma"
 
 client = RunApi::Luma::Client.new
 task = client.modify_video.create(

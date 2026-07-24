@@ -20,27 +20,27 @@ module RunApi
         #
         # @param params [Hash] modification parameters
         # @return [RunApi::Luma::Types::CompletedModifyVideoResponse] completed task with videos
-        def run(**params)
-          task = create(**params)
-          poll_until_complete { get(task.id) }
+        def run(options: nil, **params)
+          task = create(options: options, **params)
+          poll_until_complete { get(task.id, options: options) }
         end
 
         # Start a video modification task.
         #
         # @param params [Hash] modification parameters
         # @return [RunApi::Luma::Types::ModifyVideoResponse] task creation result with id
-        def create(**params)
+        def create(options: nil, **params)
           params = compact_params(params)
           validate_contract!(CONTRACT["modify-video"], params)
-          request(:post, ENDPOINT, body: params)
+          request(:post, ENDPOINT, body: params, options: options)
         end
 
         # Get video modification task status by task ID.
         #
         # @param id [String] task ID
         # @return [RunApi::Luma::Types::ModifyVideoResponse] current task status
-        def get(id)
-          request(:get, "#{ENDPOINT}/#{id}")
+        def get(id, options: nil)
+          request(:get, "#{ENDPOINT}/#{id}", options: options)
         end
       end
     end
