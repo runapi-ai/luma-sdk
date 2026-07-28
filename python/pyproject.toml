@@ -15,7 +15,7 @@ dependencies = ["runapi-core>=0.3.1"]
 
 [project.urls]
 Homepage = "https://runapi.ai/models/luma"
-Documentation = "https://runapi.ai/docs#sdk-luma"
+Documentation = "https://runapi.ai/docs/resources/sdks"
 Source = "https://github.com/runapi-ai/luma-sdk"
 Issues = "https://github.com/runapi-ai/luma-sdk/issues"
 Changelog = "https://github.com/runapi-ai/luma-sdk/blob/main/CHANGELOG.md"

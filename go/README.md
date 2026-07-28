@@ -2,7 +2,7 @@
 
 The Luma Go SDK is the language-specific package for Luma on RunAPI. Use this package for video generation, animation, and video editing workflows when your application needs request bodies, task status lookup, and consistent RunAPI errors in Go.
 
-This README is the Go package guide inside the public `luma-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/luma; for API reference, use https://runapi.ai/docs#luma; for SDK docs, use https://runapi.ai/docs#sdk-luma.
+This README is the Go package guide inside the public `luma-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/luma; for API reference, use https://runapi.ai/docs/api/luma/modify-video; for SDK docs, use https://runapi.ai/docs/resources/sdks.
 
 ## Install
 
@@ -21,7 +21,7 @@ import (
 
 client, err := luma.NewClient()
 task, err := client.ModifyVideo.Create(context.Background(), luma.ModifyVideoParams{
-  // Pass the Luma JSON request body from https://runapi.ai/docs#luma.
+  // Pass the Luma JSON request body from https://runapi.ai/docs/api/luma/modify-video.
 })
 status, err := client.ModifyVideo.Get(context.Background(), task.ID)
 ```
@@ -37,8 +37,8 @@ Use the public Go module with `github.com/runapi-ai/core-sdk/go` options when bu
 ## Links
 
 - Model page: https://runapi.ai/models/luma
-- SDK docs: https://runapi.ai/docs#sdk-luma
-- Product docs: https://runapi.ai/docs#luma
+- SDK docs: https://runapi.ai/docs/resources/sdks
+- Product docs: https://runapi.ai/docs/api/luma/modify-video
 - Pricing and rate limits: https://runapi.ai/models/luma
 - Provider comparison: https://runapi.ai/providers/luma
 - Full catalog: https://runapi.ai/models

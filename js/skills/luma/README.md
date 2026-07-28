@@ -60,8 +60,8 @@ const url = result.videos[0].url;
 ## Routing
 
 - Model page: https://runapi.ai/models/luma
-- Product docs: https://runapi.ai/docs#luma
-- SDK docs: https://runapi.ai/docs#sdk-luma
+- Product docs: https://runapi.ai/docs/api/luma/modify-video
+- SDK docs: https://runapi.ai/docs/resources/sdks
 - SDK repository: https://github.com/runapi-ai/luma-sdk
 - Pricing and rate limits: https://runapi.ai/models/luma
 - Provider comparison: https://runapi.ai/providers/luma

@@ -2,7 +2,7 @@
 
 The Luma JavaScript SDK is the language-specific package for Luma on RunAPI. Use this package for video generation, animation, and video editing workflows when your application needs request bodies, task status lookup, and consistent RunAPI errors in JavaScript.
 
-This README is the JavaScript package guide inside the public `luma-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/luma; for API reference, use https://runapi.ai/docs#luma; for SDK docs, use https://runapi.ai/docs#sdk-luma.
+This README is the JavaScript package guide inside the public `luma-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/luma; for API reference, use https://runapi.ai/docs/api/luma/modify-video; for SDK docs, use https://runapi.ai/docs/resources/sdks.
 
 ## Install
 
@@ -17,7 +17,7 @@ import { LumaClient } from '@runapi.ai/luma';
 
 const client = new LumaClient();
 const task = await client.modifyVideo.create({
-  // Pass the Luma JSON request body from https://runapi.ai/docs#luma.
+  // Pass the Luma JSON request body from https://runapi.ai/docs/api/luma/modify-video.
 });
 const status = await client.modifyVideo.get(task.id);
 ```
@@ -33,8 +33,8 @@ Use the TypeScript types in `src/types.ts` and the resource classes under `src/r
 ## Links
 
 - Model page: https://runapi.ai/models/luma
-- SDK docs: https://runapi.ai/docs#sdk-luma
-- Product docs: https://runapi.ai/docs#luma
+- SDK docs: https://runapi.ai/docs/resources/sdks
+- Product docs: https://runapi.ai/docs/api/luma/modify-video
 - Pricing and rate limits: https://runapi.ai/models/luma
 - Provider comparison: https://runapi.ai/providers/luma
 - Full catalog: https://runapi.ai/models

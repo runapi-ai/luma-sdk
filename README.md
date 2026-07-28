@@ -110,8 +110,8 @@ Most media endpoints are asynchronous. `create()` submits a task and returns its
 ## Public links
 
 - Model page: https://runapi.ai/models/luma
-- SDK docs: https://runapi.ai/docs#sdk-luma
-- Product docs: https://runapi.ai/docs#luma
+- SDK docs: https://runapi.ai/docs/resources/sdks
+- Product docs: https://runapi.ai/docs/api/luma/modify-video
 - SDK repository: https://github.com/runapi-ai/luma-sdk
 - PHP package repository: https://github.com/runapi-ai/luma-php
 - Skill repository: https://github.com/runapi-ai/luma
