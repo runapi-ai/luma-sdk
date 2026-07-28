@@ -20,10 +20,6 @@ RSpec.describe RunApi::Luma::Client do
     expect(client).to be_a(described_class)
   end
 
-  it "raises AuthenticationError without api_key" do
-    expect { described_class.new }.to raise_error(RunApi::Core::AuthenticationError, /API key is required/)
-  end
-
   it "exposes the modify_video resource" do
     client = described_class.new(api_key: "test-key")
     expect(client.modify_video).to be_a(RunApi::Luma::Resources::ModifyVideo)

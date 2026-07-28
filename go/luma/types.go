@@ -1,6 +1,8 @@
 // Package luma provides the Luma video modification API client.
 package luma
 
+import "github.com/runapi-ai/core-sdk/go/core"
+
 // TaskStatus is the async task lifecycle state (e.g. "processing", "completed", "failed").
 type TaskStatus string
 
@@ -16,6 +18,7 @@ type ModifyVideoParams struct {
 
 // AsyncTaskResponse carries the task ID, lifecycle status, and error for Luma async operations.
 type AsyncTaskResponse struct {
+	core.TaskBillingFacts
 	ID     string     `json:"id"`
 	Status TaskStatus `json:"status"`
 	Error  string     `json:"error,omitempty"`
