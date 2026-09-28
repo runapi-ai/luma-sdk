@@ -83,10 +83,8 @@ def test_create_posts_compacted_body():
             {
                 "model": "luma-modify-video",
                 "prompt": "hello",
-                "source_video_url": "https://cdn.runapi.ai/public/samples/video.mp4",
-            },
-        ),
-    ]
+                "source_video_url": "https://cdn.runapi.ai/public/samples/video.mp4"},
+        )]
     assert isinstance(result, ModifyVideoResponse)
     assert result.id == "t1"
 
@@ -103,9 +101,8 @@ def test_run_polls_and_narrows_completed_type():
         {"id": "t1", "status": "pending"},
         {
             "id": "t1",
-            "status": "completed",
-            "videos": [{"url": "https://x/y.mp4"}],
-        },
+            "status": "completed", "usage": {"cost": 0.05},
+            "videos": [{"url": "https://x/y.mp4"}]},
     )
     client = LumaClient(api_key="k", http_client=fake)
     result = client.modify_video.run(

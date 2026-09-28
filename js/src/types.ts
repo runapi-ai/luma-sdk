@@ -1,4 +1,4 @@
-import type { AsyncTaskStatus, TaskBillingResponse, TaskResponse } from '@runapi.ai/core';
+import type { AsyncTaskStatus, TaskResponse } from '@runapi.ai/core';
 
 /**
  * Parameters for prompt-guided video modification. The prompt must be in English.
@@ -18,7 +18,7 @@ export interface ModifyVideoParams {
 }
 
 /** Initial response when a video modification task is created. */
-export interface TaskCreateResponse extends TaskBillingResponse {
+export interface TaskCreateResponse {
   id: string;
   status?: AsyncTaskStatus;
 }

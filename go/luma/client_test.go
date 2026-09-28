@@ -31,8 +31,7 @@ func TestModifyVideoCreate(t *testing.T) {
 		Model:          "luma-modify-video",
 		Prompt:         "Turn the street into a rainy cyberpunk night with neon reflections",
 		SourceVideoURL: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
-		CallbackURL:    "https://your-domain.com/api/callbacks/luma",
-	})
+		CallbackURL:    "https://your-domain.com/api/callbacks/luma"})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -52,7 +51,7 @@ func TestModifyVideoCreate(t *testing.T) {
 }
 
 func TestModifyVideoGet(t *testing.T) {
-	stub := &stubHTTPClient{response: json.RawMessage(`{"id":"task_luma_456","status":"completed","videos":[{"url":"https://tempfile.runapi.ai/generated-video.mp4"}],"sources":[{"url":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"}]}`)}
+	stub := &stubHTTPClient{response: json.RawMessage(`{"id":"task_luma_456","status":"completed", "usage": {"cost": 0.05},"videos":[{"url":"https://tempfile.runapi.ai/generated-video.mp4"}],"sources":[{"url":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"}]}`)}
 	client := NewClientWithHTTP(stub)
 	resp, err := client.ModifyVideo.Get(context.Background(), "task_luma_456")
 	if err != nil {
