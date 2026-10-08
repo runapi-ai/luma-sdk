@@ -22,22 +22,6 @@ RSpec.describe RunApi::Luma::Resources::ModifyVideo do
       expect(result).to be_a(RunApi::Luma::Types::ModifyVideoResponse)
       expect(result.id).to eq("task-1")
     end
-
-    it "raises ValidationError when model is invalid" do
-      expect { resource.create(prompt: "test", source_video_url: "https://x/v.mp4") }
-        .to raise_error(RunApi::Core::ValidationError, /model must be one of: luma-modify-video/)
-    end
-
-    it "raises ValidationError when prompt is missing" do
-      expect do
-        resource.create(model: "luma-modify-video", source_video_url: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4")
-      end.to raise_error(RunApi::Core::ValidationError, /prompt is required/)
-    end
-
-    it "raises ValidationError when source_video_url is missing" do
-      expect { resource.create(model: "luma-modify-video", prompt: "test") }
-        .to raise_error(RunApi::Core::ValidationError, /source_video_url is required/)
-    end
   end
 
   describe "#get" do

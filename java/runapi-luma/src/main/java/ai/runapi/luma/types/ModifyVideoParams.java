@@ -14,8 +14,8 @@ public final class ModifyVideoParams {
 
   private ModifyVideoParams(Builder builder) {
     this.model = builder.model;
-    this.prompt = LumaParamUtils.requireNonBlank(builder.prompt, "prompt");
-    this.sourceVideoUrl = LumaParamUtils.requireNonBlank(builder.sourceVideoUrl, "sourceVideoUrl");
+    this.prompt = builder.prompt;
+    this.sourceVideoUrl = builder.sourceVideoUrl;
     this.callbackUrl = builder.callbackUrl;
     this.watermark = builder.watermark;
   }
@@ -61,26 +61,26 @@ public final class ModifyVideoParams {
 
     /** Sets the model slug using a string value. */
     public Builder model(String value) {
-      this.model = LumaParamUtils.requireNonBlankTrim(value, "model");
+      this.model = value;
       return this;
     }
 
 
     /** Sets the text prompt. */
     public Builder prompt(String value) {
-      this.prompt = LumaParamUtils.requireNonBlank(value, "prompt");
+      this.prompt = value;
       return this;
     }
 
     /** Sets the source video URL. */
     public Builder sourceVideoUrl(String value) {
-      this.sourceVideoUrl = LumaParamUtils.requireNonBlank(value, "sourceVideoUrl");
+      this.sourceVideoUrl = value;
       return this;
     }
 
     /** Sets the webhook URL for task completion notifications. */
     public Builder callbackUrl(String value) {
-      this.callbackUrl = LumaParamUtils.requireNonBlank(value, "callbackUrl");
+      this.callbackUrl = value;
       return this;
     }
 

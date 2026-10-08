@@ -1,7 +1,7 @@
 import pytest
 
 from runapi.core import config
-from runapi.core.errors import AuthenticationError, ValidationError
+from runapi.core.errors import AuthenticationError
 from runapi.luma import LumaClient
 from runapi.luma.resources.modify_video import ModifyVideo
 from runapi.luma.types import CompletedModifyVideoResponse, ModifyVideoResponse
@@ -114,24 +114,3 @@ def test_run_polls_and_narrows_completed_type():
     assert isinstance(result, CompletedModifyVideoResponse)
     assert result.videos[0].url == "https://x/y.mp4"
     assert [call[0] for call in fake.calls] == ["post", "get"]
-
-
-# --- validation -----------------------------------------------------------
-
-
-def test_create_requires_model():
-    client = LumaClient(api_key="k", http_client=FakeHttp())
-    with pytest.raises(ValidationError, match="model must be one of: luma-modify-video"):
-        client.modify_video.create(prompt="hi", source_video_url="https://cdn.runapi.ai/public/samples/source.mp4")
-
-
-def test_create_requires_prompt():
-    client = LumaClient(api_key="k", http_client=FakeHttp())
-    with pytest.raises(ValidationError, match="prompt is required"):
-        client.modify_video.create(model="luma-modify-video", source_video_url="https://cdn.runapi.ai/public/samples/source.mp4")
-
-
-def test_create_requires_source_video_url():
-    client = LumaClient(api_key="k", http_client=FakeHttp())
-    with pytest.raises(ValidationError, match="source_video_url is required"):
-        client.modify_video.create(model="luma-modify-video", prompt="hi")

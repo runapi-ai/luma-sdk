@@ -2,7 +2,6 @@
 
 require "runapi/core"
 require_relative "luma/types"
-require_relative "luma/contract_gen"
 require_relative "luma/resources/modify_video"
 require_relative "luma/client"
 

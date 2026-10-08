@@ -58,9 +58,6 @@ type ModifyVideo struct{ http core.HTTPClient }
 func (r *ModifyVideo) Create(ctx context.Context, params ModifyVideoParams, opts ...option.RequestOption) (*core.TaskCreateResponse, error) {
 	requestOptions, _ := option.ResolveRequestOptions(opts...)
 	body := core.CompactParams(params)
-	if err := core.ValidateParams(contractSchema["modify-video"], body); err != nil {
-		return nil, err
-	}
 	return core.PostJSON[core.TaskCreateResponse](ctx, r.http, modifyVideoPath, body, requestOptions)
 }
 
