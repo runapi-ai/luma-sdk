@@ -1,6 +1,6 @@
 # Luma API Go SDK for RunAPI
 
-The Luma Go SDK is the language-specific package for Luma on RunAPI. Use this package for video generation, animation, and video editing workflows when your application needs request bodies, task status lookup, and consistent RunAPI errors in Go.
+Luma Modify Video (`luma-modify-video`) was retired on 2026-10-14. New requests return HTTP 410 before task creation or balance deduction. The old ID does not map to a replacement. This package remains available for historical task lookup.
 
 This README is the Go package guide inside the public `luma-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/luma; for API reference, use https://runapi.ai/docs/api/luma/modify-video; for SDK docs, use https://runapi.ai/docs/resources/sdks.
 
@@ -10,36 +10,41 @@ This README is the Go package guide inside the public `luma-sdk` repository. For
 go get github.com/runapi-ai/luma-sdk/go@latest
 ```
 
-## Quick start
+## Historical task lookup
 
 ```go
 import (
   "context"
+  "log"
 
   "github.com/runapi-ai/luma-sdk/go/luma"
 )
 
 client, err := luma.NewClient()
-task, err := client.ModifyVideo.Create(context.Background(), luma.ModifyVideoParams{
-  // Pass the Luma JSON request body from https://runapi.ai/docs/api/luma/modify-video.
-})
-status, err := client.ModifyVideo.Get(context.Background(), task.ID)
+if err != nil {
+  log.Fatal(err)
+}
+status, err := client.ModifyVideo.Get(context.Background(), "existing-task-id")
+if err != nil {
+  log.Fatal(err)
+}
+log.Print(status)
 ```
 
-Use `create` when you want to submit a task and return quickly, `get` when you need the latest task state, and `run` when a script should create and poll until completion. In web request handlers, prefer `create` plus webhook or later `get` polling so a worker is not held open.
+Use `get` for an existing task ID. Luma has no callable model for new tasks. Do not use `create` or `run` to submit Luma work.
 
-RunAPI-generated file URLs are temporary. Download and store generated images, videos, audio, or other files in your own durable storage within 7 days; do not treat returned URLs as long-term assets.
+RunAPI-generated file URLs are temporary. Store files from historical results in your own durable storage.
 
 ## Language notes
 
-Use the public Go module with `github.com/runapi-ai/core-sdk/go` options when building video services, CLIs, or workers. The available resources are `ModifyVideo`. Keep `RUNAPI_API_KEY` in the environment or your secret manager; never commit API keys or callback secrets.
+Keep `RUNAPI_API_KEY` in the environment or your secret manager. Use the task-status response to inspect historical results and errors.
 
 ## Links
 
 - Model page: https://runapi.ai/models/luma
 - SDK docs: https://runapi.ai/docs/resources/sdks
 - Product docs: https://runapi.ai/docs/api/luma/modify-video
-- Pricing and rate limits: https://runapi.ai/models/luma
+- Retirement reference: https://runapi.ai/models/luma
 - Provider comparison: https://runapi.ai/providers/luma
 - Full catalog: https://runapi.ai/models
 - Repository: https://github.com/runapi-ai/luma-sdk

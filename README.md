@@ -22,9 +22,9 @@
 </div>
 <br/>
 
-The Luma API SDK packages JavaScript, Python, Ruby, Go, Java, and PHP clients for Luma on RunAPI. Use it for video modification workflows when your app needs typed request builders, predictable task polling, file upload helpers, account helpers, and consistent RunAPI errors.
+Luma Modify Video (`luma-modify-video`) was retired on 2026-10-14. New requests return HTTP 410 before a task is created or any balance is deducted. The old model ID does not map to a replacement. These packages remain available for historical task lookup.
 
-Luma is listed in the RunAPI model catalog at https://runapi.ai/models/luma. Variant pages below carry pricing, rate-limit, and commercial-usage details. The public `luma-sdk` repository groups the non-PHP language packages, examples, CI, and release tags for this model. The PHP package is released from a split Composer repository.
+The retirement reference is https://runapi.ai/models/luma. The public `luma-sdk` repository groups the non-PHP language packages, examples, CI, and release tags. The PHP package is released from a split Composer repository.
 
 ## Install
 
@@ -57,47 +57,29 @@ Use the Java BOM when installing multiple RunAPI Java modules:
 
 ```kotlin
 dependencies {
-  implementation(platform("ai.runapi:runapi-bom:0.9.0"))
+  implementation(platform("ai.runapi:runapi-bom:0.10.0"))
   implementation("ai.runapi:runapi-luma")
 }
 ```
 
 The PHP package is published from the split Composer repository as `runapi-ai/luma`; see https://github.com/runapi-ai/luma-php for PHP install and examples.
 
-## What you can build
+## Historical task lookup
 
-- Build apps, agent workflows, batch jobs, and production services around Luma requests.
-- Install only the language package your app needs while keeping one model-specific repository for docs and releases.
-- Use `create` for submit-only jobs, `get` for status lookup, and `run` for submit-and-poll scripts.
-- Upload local files, URL files, or base64 files through shared RunAPI file helpers.
-- Handle validation, authentication, rate limits, insufficient credits, task failures, and polling timeouts through RunAPI SDK errors.
-
-## Java quick start
+Use an existing task ID with `get`. Luma has no callable model for new tasks. Do not use `create` or `run` to submit work.
 
 ```java
 import ai.runapi.luma.LumaClient;
-import ai.runapi.luma.types.ModifyVideoParams;
-import ai.runapi.luma.types.CompletedModifyVideoResponse;
-import ai.runapi.luma.types.ModifyVideoModel;
+import ai.runapi.luma.types.ModifyVideoResponse;
 
 LumaClient client = LumaClient.builder()
     .apiKey(System.getenv("RUNAPI_API_KEY"))
     .build();
 
-CompletedModifyVideoResponse result = client.modifyVideo().run(
-    ModifyVideoParams.builder()
-        .model(ModifyVideoModel.LUMA_MODIFY_VIDEO)
-        .prompt("Make the scene warmer and add gentle camera movement")
-        .sourceVideoUrl("https://cdn.runapi.ai/public/samples/video.mp4")
-        .build()
-);
+ModifyVideoResponse task = client.modifyVideo().get("existing-task-id");
 ```
 
 Java packages target Java 8 bytecode and are tested on Java 8, 11, 17, and 21. Each model artifact depends on `ai.runapi:runapi-core`, so application code normally installs only `ai.runapi:runapi-luma`.
-
-## Task lifecycle
-
-Most media endpoints are asynchronous. `create()` submits a task and returns its id, `get(id)` fetches the latest task state, and `run(params)` creates the task and polls until it reaches a terminal state. In web request handlers, prefer `create()` plus webhook or later `get()` polling so the server does not hold a worker open.
 
 ## Repository layout
 
@@ -118,12 +100,9 @@ Most media endpoints are asynchronous. `create()` submits a task and returns its
 - Provider comparison: https://runapi.ai/providers/luma
 - Full catalog: https://runapi.ai/models
 
-## Pricing and variants
+## Retirement reference
 
-Use the most specific Luma variant page for pricing, rate limits, and commercial usage:
-- [Modify video](https://runapi.ai/models/luma)
-
-Default pricing link for the Luma SDK: https://runapi.ai/models/luma
+[Modify Video](https://runapi.ai/models/luma) retains the model identity and retirement date for historical reference. There is no purchasable Luma variant.
 
 ## File storage
 
@@ -137,7 +116,7 @@ Install the model package for your language: `@runapi.ai/luma` on npm, `runapi-l
 
 ### Where should public links point?
 
-Primary Luma links point to https://runapi.ai/models/luma. Pricing and usage-policy links point to variant pages such as https://runapi.ai/models/luma. Provider comparisons point to https://runapi.ai/providers/luma, and broad browsing points to https://runapi.ai/models.
+Primary Luma links point to https://runapi.ai/models/luma. That page records the retirement and historical model identity. Provider comparisons point to https://runapi.ai/providers/luma, and broad browsing points to https://runapi.ai/models.
 
 ## License
 

@@ -2,7 +2,7 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/ai.runapi/runapi-luma)](https://central.sonatype.com/artifact/ai.runapi/runapi-luma)
 
-The Luma Java SDK is the language-specific package for Luma on RunAPI. Use it when your Java application needs typed builders, server-side request validation, task status lookup, local polling helpers, file uploads, account helpers, and consistent RunAPI errors for Luma workflows.
+Luma Modify Video (`luma-modify-video`) was retired on 2026-10-14. New requests return HTTP 410 before task creation or balance deduction. The old ID does not map to a replacement. This package remains available for historical task lookup.
 
 This README is the Java package guide inside the public `luma-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/luma; for API reference, use https://runapi.ai/docs/api/luma/modify-video; for SDK docs, use https://runapi.ai/docs/resources/sdks.
 
@@ -34,7 +34,7 @@ Use the BOM when multiple RunAPI Java modules are installed:
 
 ```kotlin
 dependencies {
-  implementation(platform("ai.runapi:runapi-bom:0.9.0"))
+  implementation(platform("ai.runapi:runapi-bom:0.10.0"))
   implementation("ai.runapi:runapi-luma")
 }
 ```
@@ -47,7 +47,7 @@ Maven BOM:
     <dependency>
       <groupId>ai.runapi</groupId>
       <artifactId>runapi-bom</artifactId>
-      <version>0.9.0</version>
+      <version>0.10.0</version>
       <type>pom</type>
       <scope>import</scope>
     </dependency>
@@ -55,126 +55,29 @@ Maven BOM:
 </dependencyManagement>
 ```
 
-## Quick Start
+## Historical task lookup
 
 ```java
 import ai.runapi.luma.LumaClient;
-import ai.runapi.luma.types.ModifyVideoParams;
-import ai.runapi.luma.types.CompletedModifyVideoResponse;
-import ai.runapi.luma.types.ModifyVideoModel;
-
-LumaClient client = LumaClient.builder()
-    .apiKey(System.getenv("RUNAPI_API_KEY"))
-    .build();
-
-CompletedModifyVideoResponse result = client.modifyVideo().run(
-    ModifyVideoParams.builder()
-        .model(ModifyVideoModel.LUMA_MODIFY_VIDEO)
-        .prompt("Make the scene warmer and add gentle camera movement")
-        .sourceVideoUrl("https://cdn.runapi.ai/public/samples/video.mp4")
-        .build()
-);
-```
-
-The client builder reads `RUNAPI_API_KEY` when `.apiKey(...)` is omitted. Set `RUNAPI_BASE_URL` or `.baseUrl(...)` only when using a non-default RunAPI endpoint.
-
-## Task Lifecycle
-
-Most media endpoints are asynchronous. `create(params)` submits a task and returns its id, `get(id)` fetches the latest task state, and `run(params)` creates the task and polls until it reaches a terminal state. Synchronous resources expose `run(params)` only.
-
-```java
-import ai.runapi.core.polling.TaskCreateResponse;
-import ai.runapi.luma.LumaClient;
-import ai.runapi.luma.types.ModifyVideoParams;
 import ai.runapi.luma.types.ModifyVideoResponse;
-import ai.runapi.luma.types.ModifyVideoModel;
 
 LumaClient client = LumaClient.builder()
     .apiKey(System.getenv("RUNAPI_API_KEY"))
     .build();
 
-ModifyVideoParams params = ModifyVideoParams.builder()
-    .model(ModifyVideoModel.LUMA_MODIFY_VIDEO)
-    .prompt("Make the scene warmer and add gentle camera movement")
-    .sourceVideoUrl("https://cdn.runapi.ai/public/samples/video.mp4")
-    .build();
-
-TaskCreateResponse task = client.modifyVideo().create(params);
-ModifyVideoResponse status = client.modifyVideo().get(task.getId());
+ModifyVideoResponse status = client.modifyVideo().get("existing-task-id");
 ```
 
-## Files
+The client builder reads `RUNAPI_API_KEY` when `.apiKey(...)` is omitted. Use `get` for an existing task ID. Luma has no callable model for new tasks.
 
-Each model package depends transitively on `ai.runapi:runapi-core`, so you can upload files through any model client.
-
-```java
-import ai.runapi.core.files.FileCreateParams;
-import ai.runapi.core.files.FileUploadResponse;
-import java.nio.file.Paths;
-
-FileUploadResponse uploaded = client.files().create(
-    FileCreateParams.fromPath(Paths.get("input.png"))
-        .fileName("input.png")
-        .build()
-);
-```
-
-URL and base64 sources use the same entry point:
-
-```java
-FileUploadResponse fromUrl = client.files().create(
-    FileCreateParams.fromUrl("https://cdn.runapi.ai/public/samples/input.png")
-        .fileName("input.png")
-        .build()
-);
-
-FileUploadResponse fromBase64 = client.files().create(
-    FileCreateParams.fromBase64("iVBORw0KGgo...")
-        .fileName("input.png")
-        .build()
-);
-```
-
-RunAPI-generated file URLs are temporary. Download and store generated images, videos, audio, or other files in your own durable storage within 7 days; do not treat returned URLs as long-term assets.
-
-## Request Options
-
-```java
-import ai.runapi.core.RequestOptions;
-import java.time.Duration;
-
-RequestOptions options = RequestOptions.builder()
-    .pollingInterval(Duration.ofSeconds(3))
-    .pollingMaxWait(Duration.ofMinutes(20))
-    .maxRetries(0)
-    .build();
-```
-
-Per-request options can override timeout, retries, headers, and polling behavior.
-
-## Error Handling
-
-All SDK errors extend `RunApiException`.
-
-```java
-import ai.runapi.core.errors.RateLimitException;
-import ai.runapi.core.errors.RunApiException;
-
-try {
-  client.modifyVideo().run(params);
-} catch (RateLimitException error) {
-  System.err.println(error.getRetryAfter());
-} catch (RunApiException error) {
-  System.err.println(error.getCode() + " " + error.getStatusCode());
-}
-```
+RunAPI-generated file URLs are temporary. Store files from historical results in your own durable storage.
 
 ## Links
 
 - Model page: https://runapi.ai/models/luma
 - SDK docs: https://runapi.ai/docs/resources/sdks
 - Product docs: https://runapi.ai/docs/api/luma/modify-video
-- Pricing and rate limits: https://runapi.ai/models/luma
+- Retirement reference: https://runapi.ai/models/luma
 - Full catalog: https://runapi.ai/models
 - Repository: https://github.com/runapi-ai/luma-sdk
 

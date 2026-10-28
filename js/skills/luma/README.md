@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  Install this agent skill, inspect Luma fields, then run jobs through the RunAPI CLI.
+  Use this agent skill to look up historical Luma tasks.
 </p>
 
 <p align="center">
@@ -21,11 +21,13 @@
 </div>
 <br/>
 
-Transform and restyle existing videos with Luma video modification. This skill helps Claude Code, Codex, Gemini CLI, Cursor, and 50+ agents integrate Luma through RunAPI.
+Luma Modify Video (`luma-modify-video`) was retired on 2026-10-14. New requests return HTTP 410 before task creation or balance deduction. The old model ID does not map to a replacement. Historical task IDs remain queryable.
 
 The canonical agent file is `skills/luma/SKILL.md`.
 
 ## Install
+
+Use this skill with Claude Code, Codex, or Gemini CLI to query historical tasks.
 
 ```bash
 npx skills add runapi-ai/luma -g
@@ -44,17 +46,13 @@ Install the luma skill for me:
 4. Confirm the install path when done.
 ```
 
-## Quick example
+## Historical task lookup
 
 ```typescript
 import { LumaClient } from '@runapi.ai/luma';
 
 const client = new LumaClient();
-const result = await client.modifyVideo.run({
-  prompt: 'Turn the street into a rainy cyberpunk night',
-  source_video_url: 'https://cdn.runapi.ai/public/samples/video.mp4',
-});
-const url = result.videos[0].url;
+const task = await client.modifyVideo.get('existing-task-id');
 ```
 
 ## Routing
@@ -63,17 +61,17 @@ const url = result.videos[0].url;
 - Product docs: https://runapi.ai/docs/api/luma/modify-video
 - SDK docs: https://runapi.ai/docs/resources/sdks
 - SDK repository: https://github.com/runapi-ai/luma-sdk
-- Pricing and rate limits: https://runapi.ai/models/luma
+- Retirement reference: https://runapi.ai/models/luma
 - Provider comparison: https://runapi.ai/providers/luma
 - Browse all RunAPI models and skills: https://runapi.ai/models
 
 ## Agent rules
 
-- Integration work uses the target language SDK; one-off generation, manual smoke tests, debugging, or user-requested CLI runs use the RunAPI CLI skill: https://github.com/runapi-ai/cli-skill
+- Use the target language SDK to query existing task IDs. Luma has no callable model for new tasks.
 - RunAPI-generated file URLs are temporary. Download and store generated images, videos, audio, or other files in your own durable storage within 7 days; do not treat returned URLs as long-term assets.
 - Keep API keys in `RUNAPI_API_KEY` or RunAPI CLI config; never commit secrets.
-- Prefer `create`, `get`, and `run` JSON passthrough patterns instead of inventing flags for every model parameter.
-- For pricing, rate-limit, and commercial-usage answers, link to the model page rather than the repository README.
+- Use `get` for historical tasks. Do not use `create` or `run` to submit Luma work.
+- Link to the model page for the retirement date and historical model identity.
 
 ## License
 

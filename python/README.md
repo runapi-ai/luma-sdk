@@ -1,6 +1,6 @@
 # Luma API Python SDK for RunAPI
 
-The Luma Python SDK is the language-specific package for Luma on RunAPI. Use this package for video generation, animation, and video editing workflows when your application needs request bodies, task status lookup, and consistent RunAPI errors in Python.
+Luma Modify Video (`luma-modify-video`) was retired on 2026-10-14. New requests return HTTP 410 before task creation or balance deduction. The old ID does not map to a replacement. This package remains available for historical task lookup.
 
 This README is the Python package guide inside the public `luma-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/luma; for API reference, use https://runapi.ai/docs/api/luma/modify-video; for SDK docs, use https://runapi.ai/docs/resources/sdks.
 
@@ -10,46 +10,29 @@ This README is the Python package guide inside the public `luma-sdk` repository.
 pip install runapi-luma
 ```
 
-## Quick start
+## Historical task lookup
 
 ```python
 from runapi.luma import LumaClient
 
-client = LumaClient()  # reads RUNAPI_API_KEY, or pass api_key="sk-..."
-
-task = client.modify_video.create(
-    model="luma-modify-video",
-    prompt="Make it cinematic with warm golden tones",
-    source_video_url="https://cdn.runapi.ai/public/samples/video.mp4",
-)
-status = client.modify_video.get(task.id)
+client = LumaClient()
+status = client.modify_video.get("existing-task-id")
 ```
 
-Use `create` when you want to submit a task and return quickly, `get` when you need the latest task state, and `run` when a script should create and poll until completion:
+Use `get` for an existing task ID. Luma has no callable model for new tasks. Do not use `create` or `run` to submit Luma work.
 
-```python
-result = client.modify_video.run(
-    model="luma-modify-video",
-    prompt="Restyle as a hand-painted animation",
-    source_video_url="https://cdn.runapi.ai/public/samples/video.mp4",
-)
-print(result.videos[0].url)
-```
-
-In web request handlers, prefer `create` plus webhook or later `get` polling so a worker is not held open.
-
-RunAPI-generated file URLs are temporary. Download and store generated images, videos, audio, or other files in your own durable storage within 7 days; do not treat returned URLs as long-term assets.
+RunAPI-generated file URLs are temporary. Store files from historical results in your own durable storage.
 
 ## Language notes
 
-Pass parameters as keyword arguments and catch the `runapi.luma` error classes when building video jobs, workers, or scripts. The available resource is `modify_video`. Keep `RUNAPI_API_KEY` in the environment or your secret manager; never commit API keys or callback secrets.
+Keep `RUNAPI_API_KEY` in the environment or your secret manager. Use the task-status response to inspect historical results and errors.
 
 ## Links
 
 - Model page: https://runapi.ai/models/luma
 - SDK docs: https://runapi.ai/docs/resources/sdks
 - Product docs: https://runapi.ai/docs/api/luma/modify-video
-- Pricing and rate limits: https://runapi.ai/models/luma
+- Retirement reference: https://runapi.ai/models/luma
 - Provider comparison: https://runapi.ai/providers/luma
 - Full catalog: https://runapi.ai/models
 - Repository: https://github.com/runapi-ai/luma-sdk
